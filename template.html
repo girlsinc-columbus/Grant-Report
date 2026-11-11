@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Outputs and Outcomes</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#FFFFFF; --surface:#FFFFFF; --ink:#000000; --muted:#949CA1; --line:#949CA1;
+  --accent:#ED1849; --good:#ED1849; --on-accent:#FFFFFF; --gold:#949CA1;
+  --track:#949CA1; --warn-bg:#ED1849; --warn-ink:#FFFFFF;
+  --display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
+  --body:"Figtree",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#000000; --surface:#000000; --ink:#FFFFFF; --muted:#949CA1; --line:#949CA1;
+    --accent:#ED1849; --good:#ED1849; --on-accent:#FFFFFF; --gold:#949CA1;
+    --track:#949CA1; --warn-bg:#ED1849; --warn-ink:#FFFFFF;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#000000; --surface:#000000; --ink:#FFFFFF; --muted:#949CA1; --line:#949CA1;
+    --accent:#ED1849; --good:#ED1849; --on-accent:#FFFFFF; --gold:#949CA1;
+    --track:#949CA1; --warn-bg:#ED1849; --warn-ink:#FFFFFF;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.5 var(--body);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1040px;margin:0 auto;padding:28px 20px 56px}
+
+header.top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px 24px;padding-bottom:20px;border-bottom:4px solid var(--accent)}
+header.top h1{font:800 clamp(1.7rem,4.5vw,2.4rem)/1.05 var(--display);margin:0;letter-spacing:-.02em}
+header.top p{margin:6px 0 0;color:var(--muted);font-size:.95rem}
+nav.tabs{display:inline-flex;background:var(--track);border-radius:999px;padding:4px;gap:2px}
+nav.tabs button{font:600 .95rem var(--body);color:#000000;background:transparent;border:0;border-radius:999px;padding:9px 18px;cursor:pointer}
+nav.tabs button[aria-selected="true"]{background:var(--accent);color:var(--on-accent)}
+nav.tabs button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+
+section.page{display:none;padding-top:32px}
+section.page.on{display:block}
+
+h2{font:700 1.35rem/1.2 var(--display);margin:0 0 4px;letter-spacing:-.01em}
+.sub{color:var(--muted);margin:0 0 18px;font-size:.95rem;max-width:62ch}
+
+/* Clients page */
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:28px 48px;align-items:end}
+.big{font:800 clamp(5.5rem,17vw,10.5rem)/.85 var(--display);letter-spacing:-.05em;color:var(--accent);margin:0}
+.big-label{font-weight:600;margin:14px 0 0;font-size:1.05rem;display:inline-block;padding-bottom:4px;border-bottom:4px solid var(--gold)}
+.big-note{color:var(--muted);margin:2px 0 0;font-size:.92rem}
+.bars{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;align-items:end;height:250px;border-bottom:2px solid var(--ink)}
+.bar{display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%}
+.bar .v{font:700 1.4rem var(--display);margin-bottom:6px}
+.bar .fill{width:100%;background:var(--accent);border-radius:6px 6px 0 0;min-height:4px}
+.bar.empty .fill{background:repeating-linear-gradient(90deg,var(--line) 0 6px,transparent 6px 10px);height:4px!important;border-radius:0}
+.bar.empty .v{color:var(--muted)}
+.qlabels{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:8px;font-weight:600;text-align:center}
+.qlabels span small{display:block;font-weight:400;color:var(--muted)}
+
+.move{margin-top:52px}
+.cal{margin:36px 0 0;padding:16px 0 0;border-top:1px solid var(--line)}
+.cal h2{margin:0 0 4px}
+.cal-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:12px}
+.cal-grid div{border-left:4px solid var(--accent);padding:2px 0 2px 12px}
+.cal-grid b{display:block;font-size:1rem}
+.cal-grid span{display:block;color:var(--muted);font-size:.9rem}
+.cal-grid em{display:block;color:var(--muted);font-size:.85rem;font-style:normal}
+.grid-table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.grid-table caption{text-align:left}
+.grid-table th,.grid-table td{padding:12px 10px;border-bottom:1px solid var(--line);text-align:right}
+.grid-table th:first-child,.grid-table td:first-child{text-align:left}
+.grid-table thead th{font-weight:600;color:var(--muted);font-size:.9rem;border-bottom:2px solid var(--ink)}
+.grid-table td.z{color:var(--muted)}
+.grid-table td.na{color:var(--muted);font-size:.85rem}
+.table-scroll{overflow-x:auto}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:36px}
+
+/* Youth page */
+.summary{display:flex;flex-wrap:wrap;gap:10px 34px;padding:16px 0 22px;border-bottom:1px solid var(--line);margin-bottom:6px}
+.summary div{min-width:130px}
+.summary b{display:block;font:800 2.3rem/1 var(--display);letter-spacing:-.03em}
+.summary span{color:var(--muted);font-size:.9rem}
+.metric{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:14px 36px;padding:26px 0;border-bottom:1px solid var(--line)}
+.metric h3{font:700 1.2rem/1.2 var(--display);margin:0 0 4px}
+.def{margin:0;color:var(--muted);font-size:.88rem;line-height:1.4}
+.def+.def{margin-top:3px}
+.rate{display:flex;align-items:baseline;gap:12px;margin:14px 0 8px}
+.rate .pct{font:800 2.8rem/1 var(--display);letter-spacing:-.03em}
+.rate .of{color:var(--muted);font-size:.92rem}
+.track{height:12px;background:var(--track);border-radius:999px;overflow:hidden}
+.track i{display:block;height:100%;background:var(--good);border-radius:999px}
+.chip{display:inline-block;margin-top:10px;padding:3px 10px;border-radius:999px;background:var(--warn-bg);color:var(--warn-ink);font-size:.82rem;font-weight:600}
+.chip.quiet{background:var(--track);color:#000000}
+.metric.dim .pct{color:var(--muted)}
+table.q{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:.93rem;align-self:start}
+table.q th,table.q td{padding:6px 8px;text-align:right;white-space:nowrap}
+table.q th:first-child,table.q td:first-child{text-align:left;padding-left:0}
+table.q thead th{color:var(--muted);font-weight:600;font-size:.85rem;border-bottom:1px solid var(--line)}
+table.q th[scope=row]{font-weight:500;color:var(--muted)}
+table.q td.z{color:var(--muted);opacity:.7}
+table.q td.tot,table.q th.tot{font-weight:700;color:var(--ink);opacity:1}
+
+footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:.85rem}
+
+@media (max-width:760px){
+  .hero,.metric,.split{grid-template-columns:1fr}
+  .bars{height:200px}
+  .split{gap:28px}
+  .cal-grid{grid-template-columns:1fr 1fr}
+}
+
+/* Demographics page */
+.demo-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:36px 48px;margin-top:8px}
+.demo-card h3{font:700 1.05rem/1.2 var(--display);margin:0 0 10px}
+table.count{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:.93rem}
+table.count th,table.count td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:right}
+table.count th:first-child,table.count td:first-child{text-align:left}
+table.count thead th{color:var(--muted);font-weight:600;font-size:.85rem;border-bottom:2px solid var(--ink)}
+table.count td.pct{color:var(--muted);width:64px}
+table.count tr.unk td{color:var(--muted)}
+
+/* Service Map page */
+.map-controls{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin-bottom:18px}
+.seg{display:inline-flex;background:var(--track);border-radius:999px;padding:4px;gap:2px}
+.seg button{font:600 .9rem var(--body);color:#000;background:transparent;border:0;border-radius:999px;padding:7px 16px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--on-accent)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips button{font:600 .85rem var(--body);border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 14px;cursor:pointer}
+.chips button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.map-note{color:var(--muted);font-size:.85rem;margin:0 0 14px}
+.tractmap{width:100%;height:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.tractmap path{stroke:var(--bg);stroke-width:1;cursor:pointer;transition:opacity .1s}
+.tractmap path:hover{opacity:.78}
+.tractmap path[aria-pressed="true"]{stroke:var(--ink);stroke-width:2.5}
+.legend{display:flex;align-items:center;gap:8px;margin:14px 0 26px;font-size:.85rem;color:var(--muted)}
+.legend .swatches{display:flex}
+.legend .swatches i{display:inline-block;width:22px;height:14px}
+.zip-detail{border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:30px}
+.zip-detail h3{margin:0 0 2px;font:700 1.1rem var(--display)}
+.zip-detail p.sub{margin:0 0 12px}
+.gradebar-row{display:flex;align-items:center;gap:10px;margin:6px 0;font-size:.88rem}
+.gradebar-row .g{width:38px;flex:none;color:var(--muted)}
+.gradebar-row .track{flex:1}
+.gradebar-row .n{width:26px;flex:none;text-align:right;font-weight:600}
+.pie-wrap{display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center}
+.pie-legend{display:grid;gap:8px;font-size:.9rem}
+.pie-legend div{display:flex;align-items:center;gap:8px}
+.pie-legend i{width:12px;height:12px;border-radius:3px;flex:none}
+.school-list{columns:2;column-gap:40px;margin-top:6px}
+.school-list div{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid var(--line);break-inside:avoid;font-size:.92rem}
+.school-list b{font-variant-numeric:tabular-nums}
+@media (max-width:760px){
+  .demo-grid{grid-template-columns:1fr}
+  .pie-wrap{grid-template-columns:1fr}
+  .school-list{columns:1}
+}
+
+@media print{
+  :root{--bg:#fff;--surface:#fff}
+  body{background:#fff}
+  nav.tabs{display:none}
+  section.page{display:block!important;break-after:page;padding-top:20px}
+  section.page:last-of-type{break-after:auto}
+  .metric{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <h1>Outputs and Outcomes</h1>
+      <p>Girls Inc. of Columbus &amp; Phenix-Russell. Data as of <span id="asof"></span>.</p>
+      <p>Reporting period: July 1, 2026 &ndash; June 30, 2027 (fiscal year, July&ndash;June).</p>
+    </div>
+    <nav class="tabs" role="tablist" aria-label="Report pages">
+      <button role="tab" id="t-clients" aria-selected="true" aria-controls="p-clients">Clients Served</button>
+      <button role="tab" id="t-youth" aria-selected="false" aria-controls="p-youth">Youth Opportunity</button>
+      <button role="tab" id="t-demo" aria-selected="false" aria-controls="p-demo">Demographics</button>
+      <button role="tab" id="t-map" aria-selected="false" aria-controls="p-map">Service Map</button>
+    </nav>
+  </header>
+
+  <section class="page on" id="p-clients" role="tabpanel" aria-labelledby="t-clients"></section>
+  <section class="page" id="p-youth" role="tabpanel" aria-labelledby="t-youth"></section>
+  <section class="page" id="p-demo" role="tabpanel" aria-labelledby="t-demo"></section>
+  <section class="page" id="p-map" role="tabpanel" aria-labelledby="t-map"></section>
+
+  <footer>Quarters with no records yet appear as 0 or n/a.</footer>
+</div>
+
+<script>
+const DATA = /*__DATA__*/{};
+const fmt = n => (n===null||n===undefined) ? 'n/a' : Number(n).toLocaleString('en-US');
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+document.getElementById('asof').textContent = DATA.asof;
+
+/* ---------- Clients Served ---------- */
+(function(){
+  const o = DATA.overview, Q = ['Q1','Q2','Q3','Q4'];
+  const vals = Q.map(q => o.CLIENTS[q] || 0);
+  const max = Math.max(...vals, 1);
+  const bars = Q.map((q,i)=>{
+    const v = vals[i], h = Math.round((v/max)*190);
+    return `<div class="bar ${v? '' : 'empty'}"><span class="v">${fmt(v)}</span><div class="fill" style="height:${v? h : 4}px"></div></div>`;
+  }).join('');
+  const QD = {Q1:['Jul 1 – Sep 30, 2026','Jul – Sep'], Q2:['Oct 1 – Dec 31, 2026','Oct – Dec'], Q3:['Jan 1 – Mar 31, 2027','Jan – Mar'], Q4:['Apr 1 – Jun 30, 2027','Apr – Jun']};
+  /* Exits for quarters that have not started yet (relative to the data date) show as 0 */
+  const QSTART = {Q1:'2026-07-01', Q2:'2026-10-01', Q3:'2027-01-01', Q4:'2027-04-01'};
+  const asofDate = new Date(DATA.asof);
+  const exited = {};
+  ['Q2','Q3','Q4'].forEach(q => { exited[q] = new Date(QSTART[q]+'T00:00:00') > asofDate ? 0 : (o.EXITED||{})[q]; });
+  const labels = Q.map(q=>`<span>${q}<small>${QD[q][1]}</small></span>`).join('');
+  const cal = Q.map(q=>`<div><b>${q}</b><span>${QD[q][0]}</span></div>`).join('');
+  const row = (label, src, cols, span) => `<tr><th scope="row" style="font-weight:500">${label}</th>${cols.map(c=>{
+      const v = src ? src[c] : undefined;
+      if (v===undefined || v===null) return `<td class="na">n/a</td>`;
+      return `<td class="${v? '' : 'z'}">${fmt(v)}</td>`;
+    }).join('')}</tr>`;
+
+  document.getElementById('p-clients').innerHTML = `
+    <div class="hero">
+      <div>
+        <p class="big">${fmt(o.CLIENTS.Total)}</p>
+        <p class="big-label">Clients served</p>
+        <p class="big-note">Year to date, all quarters</p>
+        <p class="big-note">Program year July 1, 2026 &ndash; June 30, 2027</p>
+      </div>
+      <div>
+        <div class="bars" role="img" aria-label="Clients served by quarter: ${Q.map((q,i)=>q+' '+vals[i]).join(', ')}">${bars}</div>
+        <div class="qlabels">${labels}</div>
+      </div>
+    </div>
+
+    <div class="move">
+      <h2>Movement between quarters</h2>
+      <p class="sub">How many clients are new, exiting the program, coming back, or staying with us from one quarter to the next. Exit tracking begins in Q2.</p>
+      <div class="split">
+        <div class="table-scroll">
+          <table class="grid-table">
+            <thead><tr><th scope="col">Client movement</th><th scope="col">Q1</th><th scope="col">Q2</th><th scope="col">Q3</th><th scope="col">Q4</th></tr></thead>
+            <tbody>
+              ${row('New clients', o.NEW, ['Q1','Q2','Q3','Q4'])}
+              ${row('Clients exited', exited, ['Q1','Q2','Q3','Q4'])}
+              ${row('Returning clients', o.RETURNING, ['Q1','Q2','Q3','Q4'])}
+            </tbody>
+          </table>
+        </div>
+        <div class="table-scroll">
+          <table class="grid-table">
+            <thead><tr><th scope="col">Retained between quarters</th><th scope="col">Q1 to Q2</th><th scope="col">Q2 to Q3</th><th scope="col">Q3 to Q4</th></tr></thead>
+            <tbody>
+              ${row('Retained clients', o.RETAINED, ['Q1-Q2','Q2-Q3','Q3-Q4'])}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="cal">
+      <h2>Reporting calendar</h2>
+      <p class="sub">This report covers the July&ndash;June fiscal year, July 1, 2026 through June 30, 2027 (FY 2026&ndash;27).</p>
+      <div class="cal-grid">${cal}</div>
+    </div>`;
+})();
+
+/* ---------- Youth Opportunity ---------- */
+(function(){
+  const Q = ['Q1','Q2','Q3','Q4','Total'];
+  const list = DATA.youth;
+  const status = m => {
+    const t = m.q.Total, served = t[0]||0, ok = t[1]||0;
+    if (!served) return 'none';
+    if (!ok) return 'nooutcome';
+    return 'ok';
+  };
+  const counts = {ok:0,nooutcome:0,none:0};
+  list.forEach(m => counts[status(m)]++);
+
+  const summary = `
+    <div class="summary">
+      <div><b>${list.length}</b><span>outcome areas tracked</span></div>
+      <div><b>${counts.ok}</b><span>with outcomes recorded</span></div>
+      <div><b>${counts.nooutcome}</b><span>with participants, no outcomes yet</span></div>
+      <div><b>${counts.none}</b><span>with no participants yet</span></div>
+    </div>`;
+
+  const cell = (v, kind, isTot) => {
+    let txt, cls = isTot ? 'tot ' : '';
+    if (v===null || v===undefined) { txt='n/a'; cls+='z'; }
+    else if (kind==='pct') { txt = Number(v).toFixed(1).replace(/\.0$/,'') + '%'; if(!isTot && !v) cls+='z'; }
+    else { txt = fmt(v); if(!v) cls+='z'; }
+    return `<td class="${cls.trim()}">${txt}</td>`;
+  };
+
+  const blocks = list.map(m => {
+    const s = status(m), t = m.q.Total;
+    const pct = t[2];
+    const chip = s==='none' ? `<span class="chip quiet">No participants recorded</span>`
+               : s==='nooutcome' ? `<span class="chip">0 outcomes recorded</span>` : '';
+    const rateTxt = pct===null||pct===undefined ? 'n/a' : (Number(pct).toFixed(1).replace(/\.0$/,'')+'%');
+    const fillW = pct ? Math.min(100, pct) : 0;
+    const head = `<tr><th scope="col"><span class="sr" style="position:absolute;left:-9999px">Measure</span></th>${Q.map(q=>`<th scope="col" class="${q==='Total'?'tot':''}">${q}</th>`).join('')}</tr>`;
+    const r = (label, idx, kind) => `<tr><th scope="row">${label}</th>${Q.map(q=>cell(m.q[q][idx], kind, q==='Total')).join('')}</tr>`;
+    return `
+    <article class="metric ${s==='ok' ? '' : 'dim'}">
+      <div>
+        <h3>${esc(m.name)}</h3>
+        <p class="def">${esc(m.served_label)}</p>
+        <p class="def">Outcome: ${esc(m.success_label.charAt(0).toLowerCase()+m.success_label.slice(1))}</p>
+        <div class="rate"><span class="pct">${rateTxt}</span><span class="of">${fmt(t[1])} of ${fmt(t[0])} met the outcome</span></div>
+        <div class="track" role="img" aria-label="${rateTxt} met the outcome"><i style="width:${fillW}%"></i></div>
+        ${chip}
+      </div>
+      <table class="q">
+        <thead>${head}</thead>
+        <tbody>
+          ${r('Served', 0, 'n')}
+          ${r('Met outcome', 1, 'n')}
+          ${r('Rate', 2, 'pct')}
+        </tbody>
+      </table>
+    </article>`;
+  }).join('');
+
+  document.getElementById('p-youth').innerHTML = `
+    <h2>Youth Opportunity</h2>
+    <p class="sub">Participants served and outcomes met for each measure, by quarter and for the year to date.</p>
+    ${summary}
+    ${blocks}`;
+})();
+
+/* ---------- Demographics ---------- */
+(function(){
+  const D = DATA.demo, total = D.total;
+  const pct = n => (n/total*100).toFixed(1).replace(/\.0$/,'')+'%';
+  const table = (title, rows) => `
+    <div class="demo-card">
+      <h3>${esc(title)}</h3>
+      <table class="count">
+        <thead><tr><th scope="col">${esc(title)}</th><th scope="col">Count</th><th scope="col">%</th></tr></thead>
+        <tbody>
+          ${rows.map(([label,n]) => `<tr class="${label==='Unknown'?'unk':''}"><th scope="row">${esc(label)}</th><td>${fmt(n)}</td><td class="pct">${pct(n)}</td></tr>`).join('')}
+        </tbody>
+      </table>
+    </div>`;
+
+  document.getElementById('p-demo').innerHTML = `
+    <h2>Demographics</h2>
+    <p class="sub">Youth served during the reporting period (${fmt(total)} total), broken out by ethnicity, race, household income, and household type. Records with no value on file are listed as Unknown.</p>
+    <div class="demo-grid">
+      ${table('Ethnicity', D.demographics.ethnicity)}
+      ${table('Race', D.demographics.race)}
+      ${table('Income Range', D.demographics.income)}
+      ${table('Household Type', D.demographics.household)}
+    </div>`;
+})();
+
+/* ---------- Service Map ---------- */
+(function(){
+  const D = DATA.demo, T = D.map.tracts, B = D.map.boundaries || {}, total = D.total;
+  const COUNTIES = Object.assign({GA:[],AL:[]}, D.map.counties || {});
+  let state = Object.keys(COUNTIES).find(s => COUNTIES[s].length) || 'GA';
+  let activeCounties = new Set(COUNTIES[state]), openTract = null;
+
+  const boundariesForState = () => Object.entries(B)
+    .filter(([,v]) => v.state===state && activeCounties.has(v.county));
+
+  const shade = (n, max) => !max ? 0 : 0.18 + (n/max) * 0.72; // 0.18 (lightest) .. 0.9 (darkest)
+
+  const gradeRows = grades => {
+    const entries = Object.entries(grades).sort((a,b)=> GRADE_SORT(a[0])-GRADE_SORT(b[0]));
+    const max = Math.max(...entries.map(e=>e[1]), 1);
+    return entries.map(([g,n]) => `
+      <div class="gradebar-row">
+        <span class="g">${esc(g)}</span>
+        <span class="track"><i style="width:${Math.round(n/max*100)}%"></i></span>
+        <span class="n">${fmt(n)}</span>
+      </div>`).join('');
+  };
+
+  function GRADE_SORT(g){
+    const order = ['GK','G1','G2','G3','G4','G5','G6','G7','G8','G9','G10','G11','G12'];
+    const i = order.indexOf(g);
+    if (i>=0) return i;
+    if (g.startsWith('PS')) return 100+Number(g.slice(2)||0);
+    return 999;
+  }
+
+  // Simple equirectangular projection (longitude scaled by cos(latitude)) -- plenty
+  // accurate at county scale, with no mapping library or network tiles required.
+  function buildSvg(list, max, openId){
+    if (!list.length) return null;
+    let minLon=Infinity,maxLon=-Infinity,minLat=Infinity,maxLat=-Infinity;
+    list.forEach(([,v]) => v.rings.forEach(r => r.forEach(([lon,lat]) => {
+      if (lon<minLon) minLon=lon; if (lon>maxLon) maxLon=lon;
+      if (lat<minLat) minLat=lat; if (lat>maxLat) maxLat=lat;
+    })));
+    const cosLat = Math.cos((minLat+maxLat)/2 * Math.PI/180);
+    const W = 640, pad = 10;
+    const spanX = Math.max((maxLon-minLon)*cosLat, 1e-6), spanY = Math.max(maxLat-minLat, 1e-6);
+    const scale = (W - 2*pad) / spanX;
+    const H = Math.round(spanY*scale + 2*pad);
+    const xy = (lon,lat) => [(pad + (lon-minLon)*cosLat*scale).toFixed(1), (pad + (maxLat-lat)*scale).toFixed(1)];
+    const paths = list
+      .sort((a,b) => (T[a[0]]?.total||0) - (T[b[0]]?.total||0)) // draw busiest tracts last (on top)
+      .map(([id,v]) => {
+        const d = v.rings.map(ring => ring.map(([lon,lat],i) => {
+          const [x,y] = xy(lon,lat); return (i===0?'M':'L')+x+','+y;
+        }).join(' ') + ' Z').join(' ');
+        const n = T[id] ? T[id].total : 0;
+        const fill = n>0 ? `rgba(237,24,73,${shade(n,max).toFixed(2)})` : '#949CA1';
+        return `<path d="${d}" fill="${fill}" fill-rule="evenodd" data-tract="${id}" aria-pressed="${openId===id}"><title>Tract ${esc(v.tract)}: ${fmt(n)} served</title></path>`;
+      }).join('');
+    return `<svg class="tractmap" viewBox="0 0 ${W} ${H}" role="img" aria-label="Map of participants served by census tract">${paths}</svg>`;
+  }
+
+  function render(){
+    const list = boundariesForState();
+    const max = Math.max(...list.map(([id]) => T[id] ? T[id].total : 0), 1);
+    const stateNames = {GA:'Georgia', AL:'Alabama'};
+    const stateBtns = Object.keys(COUNTIES).map(s => `<button type="button" aria-pressed="${s===state}" data-state="${s}">${esc(stateNames[s]||s)}</button>`).join('');
+    const countyChips = COUNTIES[state].map(c => `<button type="button" aria-pressed="${activeCounties.has(c)}" data-county="${esc(c)}">${esc(c)}</button>`).join('');
+    const svg = buildSvg(list, max, openTract);
+    const sel = openTract && B[openTract] ? B[openTract] : null;
+    const selData = openTract && T[openTract] ? T[openTract] : null;
+    const td = sel ? `
+      <div class="zip-detail">
+        <h3>Census Tract ${esc(sel.tract)} &middot; ${esc(sel.county)}</h3>
+        ${selData
+          ? `<p class="sub">${fmt(selData.total)} participants served, by grade level.</p>${gradeRows(selData.grades)}`
+          : `<p class="sub">No participants served in this tract during the reporting period.</p>`}
+      </div>` : '';
+
+    document.getElementById('p-map').innerHTML = `
+      <h2>Service Map</h2>
+      <p class="sub">Participants served by census tract. Darker tracts served more participants; grey tracts had none on file. Select a state, narrow by county, and choose a tract to see its breakdown by grade level.</p>
+      <div class="map-controls">
+        <div class="seg" role="group" aria-label="State">${stateBtns}</div>
+        <div class="chips" role="group" aria-label="County">${countyChips}</div>
+      </div>
+      ${svg ? svg + `<div class="legend">Fewer served <span class="swatches">${[0.18,0.32,0.46,0.6,0.74,0.9].map(o=>`<i style="background:rgba(237,24,73,${o})"></i>`).join('')}</span> More served</div>`
+      : `<p class="map-note">No census tract outlines on file for the selected counties.</p>`}
+      ${td}
+
+      <h2>Participants By Grade Level</h2>
+      <div class="split">
+        <div class="table-scroll">
+          <table class="count">
+            <thead><tr><th scope="col">Grade</th><th scope="col">Count</th></tr></thead>
+            <tbody>${D.grade_table.map(([g,n]) => `<tr class="${g==='Unknown'?'unk':''}"><th scope="row">${esc(g)}</th><td>${fmt(n)}</td></tr>`).join('')}</tbody>
+          </table>
+        </div>
+        ${pieBlock()}
+      </div>
+
+      <h2 style="margin-top:44px">Schools Served</h2>
+      <p class="sub">${fmt(D.schools.length)} schools on file, ${fmt(total)} participants total.</p>
+      <div class="school-list">${D.schools.map(([s,n]) => `<div><span>${esc(s)}</span><b>${fmt(n)}</b></div>`).join('')}</div>`;
+
+    document.querySelectorAll('.seg [data-state]').forEach(b => b.addEventListener('click', () => {
+      state = b.dataset.state; activeCounties = new Set(COUNTIES[state]); openTract = null; render();
+    }));
+    document.querySelectorAll('.chips [data-county]').forEach(b => b.addEventListener('click', () => {
+      const c = b.dataset.county;
+      if (activeCounties.has(c) && activeCounties.size>1) activeCounties.delete(c); else activeCounties.add(c);
+      openTract = null; render();
+    }));
+    document.querySelectorAll('.tractmap path').forEach(p => p.addEventListener('click', () => {
+      openTract = openTract===p.dataset.tract ? null : p.dataset.tract; render();
+    }));
+  }
+
+  function pieBlock(){
+    const buckets = D.grade_buckets.filter(([,n]) => n>0);
+    const colors = ['#ED1849','#000000','#949CA1','#F4A6B8','#5C6367'];
+    const sum = buckets.reduce((a,[,n])=>a+n,0);
+    let angle = 0, r=70, cx=80, cy=80, segs=[];
+    buckets.forEach(([label,n],i) => {
+      const frac = n/sum, a0 = angle, a1 = angle + frac*Math.PI*2;
+      angle = a1;
+      const x0 = cx + r*Math.sin(a0), y0 = cy - r*Math.cos(a0);
+      const x1 = cx + r*Math.sin(a1), y1 = cy - r*Math.cos(a1);
+      const large = (a1-a0) > Math.PI ? 1 : 0;
+      segs.push(frac < 1 ? `<path d="M${cx},${cy} L${x0.toFixed(1)},${y0.toFixed(1)} A${r},${r} 0 ${large} 1 ${x1.toFixed(1)},${y1.toFixed(1)} Z" fill="${colors[i%colors.length]}"></path>` : `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${colors[i%colors.length]}"></circle>`);
+    });
+    const legend = buckets.map(([label,n],i) => `<div><i style="background:${colors[i%colors.length]}"></i>${esc(label)} &middot; ${(n/sum*100).toFixed(1).replace(/\.0$/,'')}% (${fmt(n)})</div>`).join('');
+    return `<div class="pie-wrap">
+      <svg width="160" height="160" viewBox="0 0 160 160" role="img" aria-label="Participants by grade band">${segs.join('')}</svg>
+      <div class="pie-legend">${legend}</div>
+    </div>`;
+  }
+
+  render();
+})();
+
+/* ---------- Tabs ---------- */
+(function(){
+  const tabs = [...document.querySelectorAll('nav.tabs button')];
+  const show = id => {
+    tabs.forEach(t => t.setAttribute('aria-selected', String(t.id==='t-'+id)));
+    document.querySelectorAll('section.page').forEach(p => p.classList.toggle('on', p.id==='p-'+id));
+    window.scrollTo(0,0);
+  };
+  tabs.forEach(t => t.addEventListener('click', () => show(t.id.slice(2))));
+  tabs.forEach((t,i) => t.addEventListener('keydown', e => {
+    if (e.key==='ArrowRight' || e.key==='ArrowLeft') {
+      const n = tabs[(i + (e.key==='ArrowRight'?1:-1) + tabs.length) % tabs.length];
+      n.focus(); show(n.id.slice(2));
+    }
+  }));
+})();
+</script>
+</body>
+</html>

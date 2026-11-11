@@ -1,0 +1,56 @@
+[
+  {
+    "code": "LIT_K3",
+    "name": "K-3 literacy",
+    "served_label": "Children (K-3) in literacy supports",
+    "success_label": "Reading at or above grade level"
+  },
+  {
+    "code": "LIT_ALL",
+    "name": "Literacy, all grades",
+    "served_label": "Children (all grades) in literacy supports",
+    "success_label": "Reading at or above grade level"
+  },
+  {
+    "code": "ATTEND",
+    "name": "School attendance",
+    "served_label": "Children and youth in programming to improve school attendance",
+    "success_label": "Maintained satisfactory attendance or improved it"
+  },
+  {
+    "code": "ACADEMIC",
+    "name": "Academic performance",
+    "served_label": "Youth in programming designed to improve academic performance",
+    "success_label": "Youth with improved academic performance"
+  },
+  {
+    "code": "MIDDLE_TRANSITION",
+    "name": "Middle to high school transition",
+    "served_label": "Middle school youth in programming to transition to high school on time",
+    "success_label": "Transitioned to high school on time"
+  },
+  {
+    "code": "CCR",
+    "name": "College and career readiness",
+    "served_label": "Youth in programming for increased college and career readiness",
+    "success_label": "Youth demonstrating increased readiness"
+  },
+  {
+    "code": "KINDERGARTEN",
+    "name": "Kindergarten readiness",
+    "served_label": "Children in kindergarten and school readiness programs",
+    "success_label": "Proficient on school readiness assessments by the end of kindergarten"
+  },
+  {
+    "code": "WORKFORCE",
+    "name": "Workforce readiness",
+    "served_label": "Youth in programming to increase workforce readiness and job skills",
+    "success_label": "Youth demonstrating increased workforce readiness"
+  },
+  {
+    "code": "POST_SECONDARY",
+    "name": "Post-secondary planning",
+    "served_label": "Youth in programming for post-secondary planning",
+    "success_label": "Youth graduating with a documented post-secondary plan"
+  }
+]
